@@ -46,6 +46,6 @@ const invalidProduct: NewProduct = {
     price: 0,
     description: "new product",
     images: [],
-    categoryId: 10
+    categoryId: 20
 }
 export { product1, product2, product3, product4, newProduct, invalidProduct}

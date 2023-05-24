@@ -7,10 +7,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import './App.css';
 import './styles/style.scss'
 import './styles/cardView.scss'
+import './styles/updateProfile.scss'
+import './styles/newProduct.scss'
 import NavBar from './components/NavBar';
 import Home from './pages/home';
 import { fetchAllProducts } from './redux/reducers/productReducer';
 import ProductInfo from './pages/ProductInfo';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import Register from './pages/Register';
+import NewProduct from './pages/NewProduct';
 
 function App() {
   const [isDark, setIsDark] = useState(false)
@@ -40,12 +46,16 @@ function App() {
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <Paper sx={{ height: "100%", backgroundColor: "secondary.main" }}>
+      <Paper sx={{ maxHeight: "100%", minHeight: 900, backgroundColor: "secondary.main" }}>
         <BrowserRouter>
           <NavBar check={isDark} change={() => setIsDark(!isDark)}/>
           <Routes>
             <Route path='/' element={<Home />}/>
             <Route path='/info/:id' element={<ProductInfo />}/>
+            <Route path='/login' element={<Login />}/>
+            <Route path='/register' element={<Register/>}/>
+            <Route path='/profile' element={<Profile/>}/>
+            <Route path='/newprdc' element={<NewProduct/>}/>
           </Routes>
         </BrowserRouter>
       </Paper>

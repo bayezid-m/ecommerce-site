@@ -27,11 +27,11 @@ describe("Test productReducers", () => {
         expect(store.getState().productsReducer.products.length).toBe(4)
     })
     test("Check if a new product is created", async () => {
-        await store.dispatch(createNewProduct(newProduct))
+        await store.dispatch(createNewProduct({newProduct}))
         expect(store.getState().productsReducer.products.length).toBe(1)
     })
     test("Check if invalid product created", async () => {
-        await store.dispatch(createNewProduct(invalidProduct))
+        await store.dispatch(createNewProduct({newProduct:invalidProduct}))
         expect(store.getState().productsReducer.products.length).toBe(0)
         expect(store.getState().productsReducer.error).toBe(JSON.stringify(
             {
