@@ -27,7 +27,7 @@ export const fetchAllCategories = createAsyncThunk(
     async () => {
       try {
         const result = await axios.get<Category[]>("https://api.escuelajs.co/api/v1/categories");
-        return result.data; // The returned result will be inside action.payload
+        return result.data
       } catch (e) {
         const error = e as AxiosError;
         return error;
@@ -39,13 +39,14 @@ export const fetchACategory = createAsyncThunk(
     async ({ categoryId}: { categoryId: number }) => {
       try {
         const result = await axios.get<Category>(`https://api.escuelajs.co/api/v1/categories/${categoryId}`);
-        return result.data; // The returned result will be inside action.payload
+        return result.data
       } catch (e) {
         const error = e as AxiosError;
         return error;
       }
     }
-);
+)
+
 
 const categoriesSlice = createSlice({
     name: "categories",
@@ -73,8 +74,7 @@ const categoriesSlice = createSlice({
                 if (action.payload instanceof AxiosError) {
                     state.error = action.payload.message
                 } else {
-                    state.category = action.payload;
-                    
+                    state.category = action.payload; 
                 }
                 state.loading = false
             })

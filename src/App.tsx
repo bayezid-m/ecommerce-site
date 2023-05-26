@@ -17,6 +17,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
 import NewProduct from './pages/NewProduct';
+import UpdateProduct from './pages/UpdateProduct';
 
 function App() {
   const [isDark, setIsDark] = useState(false)
@@ -56,6 +57,7 @@ function App() {
             <Route path='/register' element={<Register/>}/>
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/newprdc' element={<NewProduct/>}/>
+            <Route path='/updatep/:id' element={<UpdateProduct />}/>
           </Routes>
         </BrowserRouter>
       </Paper>

@@ -23,7 +23,6 @@ const Profile = () => {
   }
   useEffect(() => {
     initialValue()
-
   }, [])
   const initialValue = () => {
     setName(user?.name)

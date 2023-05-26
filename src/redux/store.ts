@@ -14,7 +14,14 @@ const store = configureStore({
         productsReducer: {
             loading: false,
             error: "",
-            products: []
+            products: [],
+            updates: {
+                title: '',
+                price: 0,
+                description: ''
+            },
+            deleteResponse: false
+            
         },   
        // favReducer: favData
     }

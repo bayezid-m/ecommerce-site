@@ -32,7 +32,7 @@ export default function NavBar({ check, change }: { check: any; change: any }) {
             <AppBar position="static" sx={{ backgroundColor: "primary.main" }}>
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        AliDuxx
+                        <Link to='/' className='name'>AliHyva</Link>
                     </Typography>
                     {token ?
                         <div style={{display:'flex', gap: 10}}>

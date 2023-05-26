@@ -1,19 +1,29 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { Product } from "../../types/Product";
 import axios, { AxiosError } from "axios";
 import { NewProduct } from "../../types/NewProduct";
+import { UpdateSingleProduct } from "../../types/UpdateProduct";
+
 
 
 interface ProductReducer {
     loading: boolean
     error: string
     products: Product[]
+    updates: UpdateSingleProduct,
+    deleteResponse: boolean,
 }
 const initialState: ProductReducer = {
     loading: false,
     error: "",
-    products: []
+    products: [],
+    updates: {
+        title: '',
+        price: 0,
+        description: ''
+    },
+    deleteResponse: false
 }
 export const fetchAllProducts = createAsyncThunk(
     "fetchAllProducts",
@@ -30,7 +40,7 @@ export const fetchAllProducts = createAsyncThunk(
 
 export const createNewProduct = createAsyncThunk(
     "createNewProduct",
-    async ({newProduct}:{newProduct: NewProduct}) => {
+    async ({ newProduct }: { newProduct: NewProduct }) => {
         try {
             console.log(newProduct);
             const result = await axios.post<Product>("https://api.escuelajs.co/api/v1/products/", newProduct)
@@ -45,13 +55,57 @@ export const createNewProduct = createAsyncThunk(
         }
     }
 )
+export const updateSingleProduct = createAsyncThunk(
+    'updateAProduct',
+    async ({ productData, productId }: { productData: UpdateSingleProduct, productId: number }) => {
+        try {
+            const result = await axios.put<Product>(`https://api.escuelajs.co/api/v1/products/${productId}`, productData);
+            return result.data;
+        } catch (e) {
+            const error = e as AxiosError;
+            return error;
+        }
+    }
+)
+export const deleteSingleProduct = createAsyncThunk(
+    'deleteAProduct',
+    async ({ productId}: { productId: number}) => {
+      try {
+        const result = await axios.delete(`https://api.escuelajs.co/api/v1/products/${productId}`);
+        return result.data; 
+      } catch (e) {
+        const error = e as AxiosError;
+        return error;
+      }
+    }
+)
+export const fetchFromCategory = createAsyncThunk(
+    'fetchACategory',
+    async ({ categoryId}: { categoryId: number }) => {
+      try {
+        const result = await axios.get<Product[]>(`https://api.escuelajs.co/api/v1/products/?categoryId=${categoryId}`);
+        return result.data
+      } catch (e) {
+        const error = e as AxiosError;
+        return error;
+      }
+    }
+)
+
 const productsSlice = createSlice({
     name: "products",
     initialState,
     reducers: {
         cleanUpProductReducer: (state) => {
             return initialState
-        }
+        },
+        sortByPrice: (state, action: PayloadAction<"Low" | "High">) => {
+            if (action.payload === "Low") {
+                state.products.sort((a, b) => b.price - a.price)
+            } else {
+                state.products.sort((a, b) => a.price - b.price)
+            }
+        },
 
     }, // list of methods to modify the state,
     extraReducers: (build) => {
@@ -79,8 +133,51 @@ const productsSlice = createSlice({
                 }
                 state.loading = false
             })
+            .addCase(updateSingleProduct.fulfilled, (state, action) => {
+                console.log(action);
+                if (action.payload instanceof AxiosError) {
+                    state.error = action.payload.message
+                } else {
+                    state.updates = action.payload
+                }
+                state.loading = false
+              })
+              .addCase(updateSingleProduct.pending, (state, action) => {
+                state.loading = true
+              })
+              .addCase(updateSingleProduct.rejected, (state, action) => {
+                state.error = "Cannot fetch data"
+              })
+              .addCase(deleteSingleProduct.fulfilled, (state, action) => {
+                if (action.payload instanceof AxiosError) {
+                  state.error = action.payload.message
+                } else {
+                  state.deleteResponse = action.payload;
+                }
+                state.loading = false
+              })
+              .addCase(deleteSingleProduct.pending, (state, action) => {
+                state.loading = true;
+              })
+              .addCase(deleteSingleProduct.rejected, (state, action) => {
+                state.error = "Cannot fetch data";
+              })
+              .addCase(fetchFromCategory.fulfilled, (state, action) => {
+                if (action.payload instanceof AxiosError) {
+                    state.error = action.payload.message
+                } else {
+                    state.products = action.payload
+                }
+                state.loading = false
+            })
+            .addCase(fetchFromCategory.pending, (state, action) => {
+                state.loading = true
+            })
+            .addCase(fetchFromCategory.rejected, (state, action) => {
+                state.error = "Couldn't fetch data"
+            })
     }
 })
 const productsReducer = productsSlice.reducer
-export const { cleanUpProductReducer } = productsSlice.actions
+export const { cleanUpProductReducer, sortByPrice } = productsSlice.actions
 export default productsReducer

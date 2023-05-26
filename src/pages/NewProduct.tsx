@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 
-import useAppSelector from '../hooks/useAppSelecter';
+import useAppSelector from '../hooks/useAppSelecter'
 import useAppDispatch from '../hooks/useAppDispatch'
 import categoryDetails, { fetchAllCategories } from '../redux/reducers/categoryReducer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { createNewProduct } from '../redux/reducers/productReducer';
 const NewProduct = () => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate();
     const [title, setTitle] = useState('')
     const [description, setDesciption] = useState('')
     const [price, setPrice] = useState(0)
@@ -18,7 +19,6 @@ const NewProduct = () => {
 
     useEffect(() => {
         dispatch(fetchAllCategories());
-
     }, [])
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault()
@@ -52,7 +52,9 @@ const NewProduct = () => {
         else{
             dispatch(createNewProduct({newProduct: {title: title, price: price, description: description, categoryId:category, images: images}}))
             console.log("successful");
+            navigate('/')
         }
+       
     }
     
     return (
