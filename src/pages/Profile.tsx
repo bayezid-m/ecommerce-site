@@ -5,6 +5,7 @@ import '../styles/profile.scss'
 import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelecter'
 import { updateUser } from '../redux/reducers/userReducer';
+import { Button } from '@mui/material';
 
 const Profile = () => {
   const dispatch = useAppDispatch()
@@ -31,6 +32,7 @@ const Profile = () => {
     setRePassword(user?.password)
     setAvater(user?.avatar)
   }
+
   console.log(name);
   console.log(email);
   console.log(errorMessage);
@@ -45,7 +47,6 @@ const Profile = () => {
     else {
       dispatch(updateUser({ userData: { name: name, email: email, password: password, role: 'customer', avatar: avater }, userId: user.id as number }));
       setDoEdit(false);
-      //console.log(name);
     }
   }
 
@@ -68,7 +69,7 @@ const Profile = () => {
           <form >
             <div>
               <label>Name</label>
-              <input type="text" className="name" value={name} onChange={e => setName(e.target.value)} />
+              <input type="text"  value={name} onChange={e => setName(e.target.value)} />
             </div>
             <div>
               <label>Email</label>
@@ -83,7 +84,8 @@ const Profile = () => {
               <input type="password" className="password" value={rePassword} onChange={e => setRePassword(e.target.value)} />
             </div>
             <div>
-              <button onClick={handleSubmit}>Update</button>
+             
+              <Button sx={{color: 'white', margin:1}} variant="contained" onClick={handleSubmit}>Update</Button>
               <button onClick={e => setDoEdit(false)}>Cancel</button>
             </div>
           </form>
@@ -96,7 +98,8 @@ const Profile = () => {
           </button>
         </div> : ""
       }
-      <button onClick={logout}>Logout</button>
+      <Button variant="contained"
+        sx={{ backgroundColor: 'primary.contrastText', color: 'white', margin: 1}} onClick={logout}>Logout</Button>
     </div>
   )
 }

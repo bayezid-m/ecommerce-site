@@ -13,6 +13,7 @@ import { updateUser } from '../redux/reducers/userReducer';
 import { Product } from '../types/Product';
 import useAppSelector from '../hooks/useAppSelecter';
 import { deleteSingleProduct } from '../redux/reducers/productReducer';
+import { addCartItem } from '../redux/reducers/cartReducer';
 
 const ProductInfo = () => {
     const { id } = useParams();
@@ -22,6 +23,8 @@ const ProductInfo = () => {
     const [productsInfo, setProductInfo] = useState<Product>()
     let [choise, setChoise] = useState<number>(0)
     const { user, checkemail, loading, error } = useAppSelector(state => state.userReducer)
+    const {cart} = useAppSelector(state => state.cartReducer)
+    let CartId:number = cart.length+1
     useEffect(() => {
         axios
             .get<Product>(`https://api.escuelajs.co/api/v1/products/${id}`)
@@ -62,8 +65,23 @@ const ProductInfo = () => {
         pt: 2,
         px: 4,
         pb: 3,
-    };
-
+    }
+    const Additem = () => {
+        dispatch(addCartItem(
+          {
+            id: CartId,
+            product: {
+              id: productsInfo?.id as number,
+              title: productsInfo?.title as string,
+              price: productsInfo?.price as number,
+              category: productsInfo?.category as any,
+              description: productsInfo?.description as string,
+              images: productsInfo?.images as string[],        
+            },
+            quantities: 1
+          }
+          )) 
+        }
     return (
         <div className="pinfo">
             <Grid lg={12} spacing={-30} container>
@@ -80,7 +98,7 @@ const ProductInfo = () => {
                         <h3>Price: {productsInfo?.price}</h3>
                         <p>Catergory: {productsInfo?.category.name}</p>
                         <p >Description: {productsInfo?.description}</p>
-                        <button>Add to Cart</button>
+                        <button onClick={() => Additem()}>Add to Cart</button>
                         {user?.role === 'admin' ?
                             <div >
                                 <button>

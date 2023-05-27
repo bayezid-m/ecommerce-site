@@ -1,51 +1,117 @@
-# Front-end Project
+## Description
 
-![React](https://img.shields.io/badge/React-v.18-blue)
-![Redux toolkit](https://img.shields.io/badge/RTK-v.1-purple)
-![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green)
-![SASS](https://img.shields.io/badge/SASS-v.1-hotpink)
+This is an ecommerce site containing dummy products, users and so one. This application covers almost everything of an actual ecommerce site.
+Some of the highlights are dark theme, card, pagination, authentication, protected routes, sorting product, filtering etc.The API has ben used 
+from `https://fakeapi.platzi.com/`. I have mainly built the prontend site and the fapeapi handles all the backend request. It also has small emplementation 
+of testing.
 
-This project requires implementation of TypeScript and SASS.
+## Table of content
 
-## Requirement
+1. React
+2. Typescript
+3. Route
+4. Testing
+5. Material UI
+5. Redux
+6. Reducer
+7. SASS/SCSS
+8. Route protection
+9. Custom hooks
+10. Components
+11. Pagination
+12. API endpoints
 
-1. Use the API endpoint [https://fakeapi.platzi.com/](https://fakeapi.platzi.com/) to create an e-commerce website. Read the documentation and learn how to use the different endpoints.
-2. Create at lease 4 pages (can be more if you want): Home page, product page,
-profile page (only available if user logins), and cart page (cart could be a page or a modal)
-3. Create Redux store for following features:
-    - product reducer: get all products, find a single products, sort products by
-    categories, sort products by price. Create, update and delete a product (enable update & delete features only for admin of the webapp. For example, you can check if user is your admin account before let them delete product)
-    - user reducer: Register and Login
-    - cart reducer: add product to cart, remove products, update products's quantity in cart
-4. When adding routers to your application, programatically set certain routes to be private. For example, route to user profile page should not be accessible if user has not logged in.
-5. Deploy the application and rewrite README file.
+## Feature
 
-## Bonus
+1. User authentication
+2. Admin specific tasks (add, update, delete a product)
+3. filtering product by catergory or price range or high low order
+4. Dynamic dark theme
+5. Adding product in cart and managing quantity
+6. Some protected routes
+7. Well responsive UI
+8. Pagination for product card
 
-1. Use context API to switch theme
-2. Implement unit testing for the reducers
+## Instalation
 
-## Instruction to start the project
+1. git cone + {my project repository}
+2. npm install
 
-In the project directory, you can run:
+## Installed packages for project
 
-### `npm install`
+1. npx create-react-app AliHyva --template redux-typescript
+2. npm install --save-dev ts-test
+3. npm install --save-dev @testing-library/user-event
+3. npm install @mui/material @emotion/react @emotion/styled
+4. npm install @mui/icons-material
+5. npm install react-router-dome
 
-Install all the dependencies
+## Deployment
 
-### `npm start`
+Live demo -> "https://alihyva.netlify.app/"
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Folder structure
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+````
+src
+├── App.css
+├── App.tsx
+├── components
+│   ├── CardView.tsx
+│   ├── Footer.tsx
+│   ├── NavBar.tsx
+│   ├── Pagination.tsx
+│   └── Protector.tsx
+├── hooks
+│   ├── useAppDispatch.ts
+│   └── useAppSelecter.ts
+├── index.css
+├── index.tsx
+├── pages
+│   ├── CartPage.tsx
+│   ├── ConfirmPage.tsx
+│   ├── Login.tsx
+│   ├── NewProduct.tsx
+│   ├── ProductInfo.tsx
+│   ├── Profile.tsx
+│   ├── Register.tsx
+│   ├── RequestPage.tsx
+│   ├── UpdateProduct.tsx
+│   └── home.tsx
+├── redux
+│   ├── reducers
+│   │   ├── cartReducer.ts
+│   │   ├── categoryReducer.ts
+│   │   ├── productReducer.ts
+│   │   └── userReducer.ts
+│   └── store.ts
+├── setupTests.ts
+├── styles
+│   ├── cardView.scss
+│   ├── footer.scss
+│   ├── home.scss
+│   ├── newProduct.scss
+│   ├── profile.scss
+│   ├── style.scss
+│   └── updateProfile.scss
+├── tests
+│   ├── components
+│   ├── data
+│   │   ├── category.ts
+│   │   └── products.ts
+│   ├── reducers
+│   │   └── productsReducer.test.ts
+│   ├── servers
+│   │   └── productServer.ts
+│   └── shared
+│       └── store.ts
+└── types
+    ├── CartItem.ts
+    ├── Category.ts
+    ├── NewProduct.ts
+    ├── Product.ts
+    ├── UpdateProduct.ts
+    ├── User.ts
+    └── UserCredential.ts
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+````

@@ -1,6 +1,13 @@
+@use '../styles/cardView.scss';
+@use '../styles/updateProfile.scss';
+@use '../styles/newProduct.scss';
+@use '../styles/profile.scss';
+@use '../styles/home.scss';
+@use '../styles/footer.scss';
+
 .poster {
-    max-height: 14em; 
-    margin-top: 2em;
+    max-height: 13em; 
+    margin-top: 1em;
 }
 
 .pinfo {
@@ -19,6 +26,21 @@ a{
 .name{
     color: white
 }
-.select{
-    min-width: 200px;
+.cartItem{
+    display: contents;
+    flex-direction: row;
+}
+.pagination{
+    justify-content: right;
+    margin-right: 10%;
+    margin-top: 5px;
+    padding: 5px;
+    gap: 5px;
+  }
+.cpage{
+    margin-top: 17px;
+    display: flex;
+  }
+.dpage{
+    margin-top: 0;
 }

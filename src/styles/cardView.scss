@@ -3,10 +3,15 @@
     flex-direction: column;
     text-align: center;
     justify-content: center;
-    padding:1rem;
-    min-height:15em;
+    align-content: center;
+    padding:.5rem;
+    min-height:22em;
+    max-height: 22em;
     margin-top: 1em;
+  
     .card_button {
         margin: 1em;
+        max-width: 10em;
+       
     }
 }

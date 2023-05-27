@@ -5,37 +5,20 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import  {Link}  from 'react-router-dom'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import { Select } from '@mui/material';
 import { useEffect, useState } from 'react';
 import useAppSelector from '../hooks/useAppSelecter';
 import useAppDispatch from '../hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
+
 import { createSingleUser, fetchAllUser } from '../redux/reducers/userReducer';
 import { User } from '../types/User';
 import axios from 'axios';
-
-function Copyright(props: any) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 
 export default function Register() {
@@ -82,20 +65,21 @@ export default function Register() {
     let emailAvailable: User[] = users.filter(u => u.email === email);
     if (emailAvailable.length === 0) {
       if (name === '' || email === '' || password === '' || rePassword === '') {
-        setErrorMessage('Please enter all input');
+        setErrorMessage('Please check all input');
       }
       else if (email.includes('@') === false || email.includes('.') === false) {
-        setErrorMessage('email format is wrong');
+        setErrorMessage('Email format is wrong');
       }
       else if (password !== rePassword) {
         setErrorMessage('Password did not match')
       }
       else {
         dispatch(createSingleUser({ userData: { name: name, email: email, password: password, avatar: avater, role: 'customer' } }));
+        navigate('/')
       }
     }
     else {
-      alert(`This email is already registered !`)
+      setErrorMessage('This email is already registered !')
     }
   };
   return (
@@ -173,23 +157,6 @@ export default function Register() {
                 onChange={handleImageUpload}
               />
             </Grid>
-            {/* <Grid item xs={12}>     
-            <Box>      
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Aveter</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            //value={catergory}
-                            label="Aveter"                      
-                        >
-                            <MenuItem value={23} onClick={e=>setAvater("https://picsum.photos/640/640?r=1727")}>Avater 1</MenuItem>                    
-                            <MenuItem value={20} onClick={e=>setAvater("https://picsum.photos/640/640?r=5047")}>Avater 2</MenuItem>
-                            <MenuItem value={30} onClick={e=>setAvater("https://picsum.photos/640/640?r=2794")}>Avater 3</MenuItem>
-                        </Select>
-                    </FormControl>
-                    </Box> 
-            </Grid> */}
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -197,6 +164,7 @@ export default function Register() {
               />
             </Grid>
           </Grid>
+          <p style={{color:'red'}} >{errorMessage}</p>
           <Button
             type="submit"
             fullWidth
@@ -204,17 +172,15 @@ export default function Register() {
             sx={{ mt: 3, mb: 2 }}
           >
             Sign Up
-          </Button>
-          <Grid container justifyContent="flex-end">
+          </Button>       
+          <Grid container >
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+            <Link to="/login"><p>Already have account? Login</p></Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <Copyright sx={{ mt: 5 }} />
+     
     </Container>
   );
 }

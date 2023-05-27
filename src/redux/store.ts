@@ -2,13 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import productsReducer from "./reducers/productReducer";
 import userReducer from "./reducers/userReducer";
 import categoryReducer from "./reducers/categoryReducer";
+import cartReducer from "./reducers/cartReducer";
 
 const store = configureStore({
     reducer: {
         productsReducer,
         userReducer,
         categoryReducer,
-        // favReducer
+        cartReducer,
     },
     preloadedState: {
         productsReducer: {
