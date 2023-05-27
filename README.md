@@ -36,6 +36,8 @@ of testing.
 
 1. git cone + {my project repository}
 2. npm install
+3. npm start
+4. npm test (for testing)
 
 ## Installed packages for project
 
